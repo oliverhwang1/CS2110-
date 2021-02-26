@@ -39,7 +39,10 @@ public class Phd {
             
     }
     
+    // Fisrt object created Group C
     Phd Phd1 = new Phd(nameOfPerson, year, month);
+    
+    // Second object created for Group C
     Phd Phd2 = new Phd(nameOfPerson, year, month);
     
     /** Constructor: a Phd with name n, Phd year y, Phd month m, first advisor
