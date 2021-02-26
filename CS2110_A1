@@ -33,16 +33,43 @@ public class Phd {
         nameOfPerson= n;
         year= y;
         month= m;
+        firstAdvisor = null;
+        secondAdvisor= null;
+        numberOfAdvisees = 0;
+            
+    }
+    
+    Phd Phd1 = new Phd(nameOfPerson, year, month);
+    Phd Phd2 = new Phd(nameOfPerson, year, month);
+    
+    /** Constructor: a Phd with name n, Phd year y, Phd month m, first advisor
+    a1, and second advisor a2.
+    Precondition: n has at least 1 char, y > 1000, m is in 1..12,
+    a1 and a2 are not null, and a1 and a2 are different. */
+    
+    public Phd(String n, int y, int m,
+        Phd a1, Phd a2) {
+        
+        nameOfPerson= n;
+        year= y;
+        month= m;
+        firstAdvisor = a1;
+        secondAdvisor= a2;
+        numberOfAdvisees = 0;
     }
 
     /** the name of this person */
     public String name() {
+        String character = new String(nameOfPerson);
+        assert character.length() > 0;
         return nameOfPerson;
     }
 
     /** the date on which this person got the Phd. In the form "month/year", with no blanks, e.g.
      * "6/2007" */
     public Phd date() {
+        assert year > 1000;
+        assert month > 0 && month < 13;
         return firstAdvisor;
     }
 
@@ -60,6 +87,45 @@ public class Phd {
     public int nAdvisees() {
         return numberOfAdvisees;
     }
+    
+    /** Make p the first advisor of this person.
+    Precondition: the first advisor is unknown and p is not null. */
+    
+    public void setAdvisor1(Phd p) {
+        
+    }
+    
+    /** Make p the second advisor of this person.
+    Precondition: The first advisor (of this person) is known, the second advisor
+    is unknown, p is not null, and p is different from the first advisor. */
+    
+    public void setAdvisor2(Phd p) {
+        
+    }
+    
+    /** "this Phd has no advisees",
+    i.e. true if this Phd has no advisees and false otherwise */
+    
+    public boolean hasNoAdvisees() {
+        
+        return true;
+    }
+    
+    /** "p is not null and this person got the Phd before p.” */
+    
+    public boolean gotBefore() {
+        
+        return true;
+    }
+    
+    /** "this person and p are intellectual siblings."
+    Precondition: p is not null. */
+    
+    public boolean areSibs(Phd p) {
+        
+        return true;
+    }
+    
 
-}
-
+    
+    
