@@ -89,6 +89,8 @@ public class Phd {
      * not null. */
 
     public void setAdvisor1(Phd p) {
+        firstAdvisor= p;
+        p.numberOfAdvisees= p.numberOfAdvisees + 1;
 
     }
 
@@ -97,6 +99,8 @@ public class Phd {
      * advisor. */
 
     public void setAdvisor2(Phd p) {
+        secondAdvisor= p;
+        p.numberOfAdvisees= p.numberOfAdvisees + 1;
 
     }
 
@@ -104,21 +108,24 @@ public class Phd {
 
     public boolean hasNoAdvisees() {
 
-        return true;
+        return numberOfAdvisees == 0;
     }
 
     /** "p is not null and this person got the Phd before p.” */
 
-    public boolean gotBefore() {
+    public boolean gotBefore(Phd p) {
 
-        return true;
+        return p != null &&
+            (year <= p.year && month < p.month || year < p.year && month >= p.month);
     }
 
     /** "this person and p are intellectual siblings." Precondition: p is not null. */
 
     public boolean areSibs(Phd p) {
+        assert p != null;
 
-        return true;
+        return this != p && p.advisor1() != firstAdvisor && p.advisor1() != secondAdvisor &&
+            p.advisor2() != firstAdvisor && p.advisor2() != secondAdvisor;
     }
 
 }
