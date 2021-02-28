@@ -23,11 +23,11 @@ class PhdTest {
     void testConstructor2() {
         Phd jun10= new Phd("David", 1810, 6);
         Phd jul09= new Phd("Gries", 1809, 7);
-
         Phd may04= new Phd("Brian", 1904, 5, jun10, jul09);
-
-        Phd feb77= new Phd("James", 1977, 2, null, null);
+        Phd feb77= new Phd("James", 1977, 2, jun10, null);
         Phd aug80= new Phd("Han", 1980, 8, feb77, null);
+        Phd jan81= new Phd("Tom", 1981, 1, aug80, may04);
+        Phd mar82= new Phd("Jerry", 1982, 3, jan81, aug80);
 
         assertEquals("Brian", may04.name());
         assertEquals("5/1904", may04.date());
@@ -42,17 +42,22 @@ class PhdTest {
         assertEquals("8/1980", aug80.date());
 
         aug80.setAdvisor1(feb77);
-        assertEquals(feb77, aug80.advisor1());
-        assertEquals(null, feb77.advisor2());
-
-        assertEquals(1, feb77.nAdvisees());
-
-        Phd jan81= new Phd("Tom", 1981, 1, aug80, may04);
-        Phd mar82= new Phd("Jerry", 1982, 3, jan81, null);
+        feb77.setAdvisor1(jun10);
+        may04.setAdvisor1(jun10);
         jan81.setAdvisor1(aug80);
         jan81.setAdvisor2(may04);
         mar82.setAdvisor1(jan81);
-        assertEquals(false, mar82.areSibs(jan81));
+        mar82.setAdvisor2(aug80);
+
+        assertEquals(feb77, aug80.advisor1());
+        assertEquals(null, feb77.advisor2());
+
+        assertEquals(2, jun10.nAdvisees());
+        assertEquals(1, feb77.nAdvisees());
+        assertEquals(2, aug80.nAdvisees());
+        assertEquals(1, jan81.nAdvisees());
+
+        assertEquals(true, mar82.areSibs(jan81));
 
     }
 
@@ -62,6 +67,7 @@ class PhdTest {
 
     void gotBefore() {
 
+        // Created new Phd object
         Phd feb88= new Phd("Ann", 1988, 2, null, null);
         Phd aug88= new Phd("Jen", 1988, 8, null, null);
         Phd jul98= new Phd("Ben", 1998, 7, null, null);
@@ -100,15 +106,11 @@ class PhdTest {
     void areSibs() {
 
         Phd may50= new Phd("Brian", 1950, 5, null, null);
-
         Phd jul98= new Phd("Ben", 1998, 7, null, null);
-
         Phd sep88= new Phd("Jim", 1988, 9, null, null);
         Phd jul88= new Phd("Kim", 1988, 7, null, null);
-
         Phd jul87= new Phd("John", 1987, 7, null, null);
         Phd jul87_2= new Phd("John", 1987, 7, null, null);
-
         Phd jul86= new Phd("Jon", 1987, 7, null, null);
 
         // neither A nor B has an advisor:
