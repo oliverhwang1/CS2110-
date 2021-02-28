@@ -77,6 +77,7 @@ public class Phd {
 
     /** the second advisor of this Phd (null if unknown or nonexistent). */
     public Phd advisor2() {
+
         return secondAdvisor;
     }
 
@@ -89,6 +90,7 @@ public class Phd {
      * not null. */
 
     public void setAdvisor1(Phd p) {
+        assert p != null;
         firstAdvisor= p;
         p.numberOfAdvisees= p.numberOfAdvisees + 1;
 
@@ -99,6 +101,7 @@ public class Phd {
      * advisor. */
 
     public void setAdvisor2(Phd p) {
+        assert p != null && p != firstAdvisor && firstAdvisor != null;
         secondAdvisor= p;
         p.numberOfAdvisees= p.numberOfAdvisees + 1;
 
@@ -107,25 +110,27 @@ public class Phd {
     /** "this Phd has no advisees", i.e. true if this Phd has no advisees and false otherwise */
 
     public boolean hasNoAdvisees() {
-
+        assert numberOfAdvisees >= 0;
         return numberOfAdvisees == 0;
     }
 
     /** "p is not null and this person got the Phd before p.” */
 
     public boolean gotBefore(Phd p) {
-
+        assert p != null;
         return p != null &&
-            (year <= p.year && month < p.month || year < p.year && month >= p.month);
+            (year == p.year && month < p.month || year < p.year);
     }
 
     /** "this person and p are intellectual siblings." Precondition: p is not null. */
 
     public boolean areSibs(Phd p) {
-        assert p != null;
+        assert p != null && this != null;
 
-        return this != p && p.advisor1() != firstAdvisor && p.advisor1() != secondAdvisor &&
-            p.advisor2() != firstAdvisor && p.advisor2() != secondAdvisor;
+        return this != p && (p.advisor1() != null &&
+            (p.advisor1() == firstAdvisor || p.advisor1() == secondAdvisor) ||
+            p.advisor2() != null &&
+                (p.advisor2() == firstAdvisor || p.advisor2() == secondAdvisor));
     }
 
 }
