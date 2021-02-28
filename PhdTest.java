@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 class PhdTest {
-
+    // Test case for constructor 1
     @Test
     void testConstructor1() {
         Phd feb77= new Phd("James", 1977, 2);
@@ -19,6 +19,7 @@ class PhdTest {
 
     }
 
+    // Test case for constructor 2
     @Test
     void testConstructor2() {
         Phd jun10= new Phd("David", 1810, 6);
@@ -28,6 +29,7 @@ class PhdTest {
         Phd aug80= new Phd("Han", 1980, 8, feb77, null);
         Phd jan81= new Phd("Tom", 1981, 1, aug80, may04);
         Phd mar82= new Phd("Jerry", 1982, 3, jan81, aug80);
+        Phd mar83= new Phd("Django", 1983, 3, jun10, null);
 
         assertEquals("Brian", may04.name());
         assertEquals("5/1904", may04.date());
@@ -48,24 +50,25 @@ class PhdTest {
         jan81.setAdvisor2(may04);
         mar82.setAdvisor1(jan81);
         mar82.setAdvisor2(aug80);
+        mar83.setAdvisor1(jun10);
 
         assertEquals(feb77, aug80.advisor1());
         assertEquals(null, feb77.advisor2());
 
-        assertEquals(2, jun10.nAdvisees());
+        assertEquals(1, jan81.nAdvisees());
         assertEquals(1, feb77.nAdvisees());
         assertEquals(2, aug80.nAdvisees());
-        assertEquals(1, jan81.nAdvisees());
+        assertEquals(3, jun10.nAdvisees());
 
         assertEquals(true, mar82.areSibs(jan81));
 
     }
 
-    // Testing gotBefore
+    // Test cases for gotBefore
 
     @Test
 
-    void gotBefore() {
+    void test_gotBefore() {
 
         // Created new Phd object
         Phd feb88= new Phd("Ann", 1988, 2, null, null);
@@ -99,11 +102,11 @@ class PhdTest {
 
     }
 
-    // Testing areSibs
+    // Test cases for areSibs
 
     @Test
 
-    void areSibs() {
+    void test_areSibs() {
 
         Phd may50= new Phd("Brian", 1950, 5, null, null);
         Phd jul98= new Phd("Ben", 1998, 7, null, null);
@@ -169,18 +172,7 @@ class PhdTest {
         assertEquals(false, feb88_7.areSibs(aug88_7));
     }
 
-    // Testing the name of this person:
-
-    @Test
-    public void t1() {
-        Phd feb88= new Phd(null, 1988, 2, null, null);
-        Phd feb88_2= new Phd("", 1988, 2, null, null);
-
-        assertThrows(AssertionError.class, () -> { feb88.name(); });
-        assertThrows(AssertionError.class, () -> { feb88_2.name(); });
-    }
-
-    // Testing the date of this person:
+    // Test case for the date of this person:
     @Test
     public void test_assert_statement() {
         Phd feb88= new Phd(null, 999, 2, null, null);
@@ -190,6 +182,17 @@ class PhdTest {
         assertThrows(AssertionError.class, () -> { feb88.date(); });
         assertThrows(AssertionError.class, () -> { feb88_2.date(); });
         assertThrows(AssertionError.class, () -> { feb88_3.date(); });
+    }
+
+    // Test case for name of this person:
+
+    @Test
+    public void more_assert_tests() {
+        Phd feb88= new Phd(null, 1988, 2, null, null);
+        Phd feb88_2= new Phd("", 1988, 2, null, null);
+
+        assertThrows(AssertionError.class, () -> { feb88.name(); });
+        assertThrows(AssertionError.class, () -> { feb88_2.name(); });
     }
 
     // Testing the case that Making p the first advisor of this person.
