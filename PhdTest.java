@@ -178,10 +178,12 @@ class PhdTest {
         Phd feb88= new Phd(null, 999, 2, null, null);
         Phd feb88_2= new Phd("", 1988, -1, null, null);
         Phd feb88_3= new Phd("", 1988, 14, null, null);
+        Phd feb88_4= new Phd("", 500, 3, null, null);
 
         assertThrows(AssertionError.class, () -> { feb88.date(); });
         assertThrows(AssertionError.class, () -> { feb88_2.date(); });
         assertThrows(AssertionError.class, () -> { feb88_3.date(); });
+        assertThrows(AssertionError.class, () -> { feb88_4.date(); });
     }
 
     // Test case for name of this person:
@@ -196,11 +198,14 @@ class PhdTest {
     }
 
     // Testing the case that Making p the first advisor of this person.
-    // @Test
-    // public void t3() {
-    // Phd may50= new Phd("Brian", 1950, 5, null, null);
+    @Test
+    public void t3() {
+        Phd jun10= new Phd("David", 1810, 6);
+        Phd jul09= new Phd("Gries", 1809, 7);
+        Phd may04= new Phd("Brian", 1904, 5, jun10, jul09);
+        Phd may50= new Phd("Brian", 1950, 5, null, may04);
 
-    // assertThrows(AssertionError.class, () -> { may50.nAdvisees(); });
+        assertThrows(AssertionError.class, () -> { may50.setAdvisor2(may04); });
 
-    // }
+    }
 }
