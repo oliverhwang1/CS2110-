@@ -1,7 +1,8 @@
 package a1;
 
-/** NetId: ko334, bh572 Time spent: 2 hours, mm minutes. <br>
- * What I thought about this assignment: <br>
+/** NetId: ko334, bh572 Time spent: 4 hours, mm minutes. <br>
+ * What I thought about this assignment: This assignment was a great learning experience and a good
+ * introduction to the Java classes. <br>
  * <br>
  * An instance maintains info about the Phd of a person. */
 
@@ -30,6 +31,7 @@ public class Phd {
      * 1..12 */
 
     public Phd(String n, int y, int m) {
+
         nameOfPerson= n;
         year= y;
         month= m;
@@ -88,7 +90,6 @@ public class Phd {
 
     /** Make p the first advisor of this person. Precondition: the first advisor is unknown and p is
      * not null. */
-
     public void setAdvisor1(Phd p) {
         assert p != null;
         firstAdvisor= p;
@@ -99,7 +100,6 @@ public class Phd {
     /** Make p the second advisor of this person. Precondition: The first advisor (of this person)
      * is known, the second advisor is unknown, p is not null, and p is different from the first
      * advisor. */
-
     public void setAdvisor2(Phd p) {
         assert p != null && p != firstAdvisor && firstAdvisor != null;
         secondAdvisor= p;
@@ -108,14 +108,11 @@ public class Phd {
     }
 
     /** "this Phd has no advisees", i.e. true if this Phd has no advisees and false otherwise */
-
     public boolean hasNoAdvisees() {
-        assert numberOfAdvisees >= 0;
         return numberOfAdvisees == 0;
     }
 
     /** "p is not null and this person got the Phd before p.” */
-
     public boolean gotBefore(Phd p) {
         assert p != null;
         return p != null &&
@@ -123,7 +120,6 @@ public class Phd {
     }
 
     /** "this person and p are intellectual siblings." Precondition: p is not null. */
-
     public boolean areSibs(Phd p) {
         assert p != null && this != null;
 

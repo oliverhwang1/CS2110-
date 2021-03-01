@@ -17,6 +17,21 @@ class PhdTest {
         assertEquals(null, feb77.advisor2());
         assertEquals(0, feb77.nAdvisees());
 
+        Phd jun10= new Phd("", 1810, 6);
+        Phd jul09= new Phd("Gries", 800, 7);
+        Phd jul09_1= new Phd("Gries", 1809, 27);
+        Phd jul09_2= new Phd("Gries", 520, 20);
+        Phd jul09_3= new Phd("Gries", 1809, 0);
+
+        assertThrows(AssertionError.class, () -> { jun10.name(); });// test case when n has at least
+                                                                    // 1 char
+
+        assertThrows(AssertionError.class, () -> { jul09.date(); }); // test case when year < 1000
+        assertThrows(AssertionError.class, () -> { jul09_1.date(); }); // test case when month > 12
+        assertThrows(AssertionError.class, () -> { jul09_2.date(); }); // test case when month > 12
+                                                                       // and year <1000
+        assertThrows(AssertionError.class, () -> { jul09_3.date(); }); // test case when month < 1
+
     }
 
     // Test case for constructor 2
@@ -178,7 +193,7 @@ class PhdTest {
         Phd feb88= new Phd(null, 999, 2, null, null);
         Phd feb88_2= new Phd("", 1988, -1, null, null);
         Phd feb88_3= new Phd("", 1988, 14, null, null);
-        Phd feb88_4= new Phd("", 500, 3, null, null);
+        Phd feb88_4= new Phd("", 500, 15, null, null);
 
         assertThrows(AssertionError.class, () -> { feb88.date(); });
         assertThrows(AssertionError.class, () -> { feb88_2.date(); });
@@ -197,15 +212,35 @@ class PhdTest {
         assertThrows(AssertionError.class, () -> { feb88_2.name(); });
     }
 
-    // Testing the case that Making p the first advisor of this person.
+    // Testing the case for setAdvisor2(Phd p):
     @Test
     public void t3() {
         Phd jun10= new Phd("David", 1810, 6);
         Phd jul09= new Phd("Gries", 1809, 7);
         Phd may04= new Phd("Brian", 1904, 5, jun10, jul09);
         Phd may50= new Phd("Brian", 1950, 5, null, may04);
+        Phd may04_2= new Phd("Brian", 1904, 5, jun10, jun10);
+        Phd may04_3= new Phd("Brian", 1904, 5, jun10, null);
 
+        // test case when the person doesn't have the first advisor but we want to
+        // set a second advisor to the person:
         assertThrows(AssertionError.class, () -> { may50.setAdvisor2(may04); });
 
+        // test case when the person's first advisor is the same as the second advisor:
+        assertThrows(AssertionError.class, () -> { may04_2.setAdvisor2(jun10); });
+
+        // test case when p is null:
+        assertThrows(AssertionError.class, () -> { may04_3.setAdvisor2(null); });
+
     }
+
+    // Testing the case for setAdvisor1(Phd p):
+    @Test
+    public void t4() {
+        Phd may04= new Phd("Brian", 1904, 5, null, null);
+
+        // test case when p is null:
+        assertThrows(AssertionError.class, () -> { may04.setAdvisor1(null); });
+    }
+
 }
