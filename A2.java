@@ -5,6 +5,10 @@ import java.util.Arrays;
 /* NetIds: ko334, bh572.
  * What I thought about this assignment:
  *
+ * This assignment was okay but very challenging, especially when we use different primitive types.
+ * However, it is good for practicing debugging skills.
+ *
+ *
  *
  *
  *  */
@@ -46,7 +50,7 @@ public class A2 {
      * Example: for 3 hours 15 minutes, use 3.25<br>
      * Example: for 4 hours 30 minutes, use 4.50<br>
      * Example: for 5 hours, use 5 or 5.0 */
-    public static double timeSpent= -1;
+    public static double timeSpent= 5;
 
     /** Return true iff (i.e. if and only if) the middle characters of s are different. <br>
      * Note: If s has an odd number of chars, there is ONE middle char, so return false.<br>
@@ -124,16 +128,16 @@ public class A2 {
          * use 97 in the method body.
          */
         if (s.length() == 0) { return ""; }
-        String res= "";
+        String result= "";
         for (int i= 0; i < s.length(); i++ ) {
             if (s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
-                res= res + "." + Character.toString(s.charAt(i)) +
+                result= result + "." + Character.toString(s.charAt(i)) +
                     Character.toUpperCase(s.charAt(i));
             } else {
-                res= res + Character.toString(s.charAt(i));
+                result= result + Character.toString(s.charAt(i));
             }
         }
-        return res;
+        return result;
 
         // throw new UnsupportedOperationException();
     }
@@ -156,16 +160,17 @@ public class A2 {
         // discussed in the previous method apply here also.
         if (s.length() == 0) { return ""; }
 
-        String res1= ""; // be the string of all lower case values 'a...z' and other characters
-        String res2= ""; // be the string of all upper case values 'A...Z'
+        String result_lower= ""; // be the string of all lower case values 'a...z' and other
+                                 // characters
+        String result_upper= ""; // be the string of all upper case values 'A...Z'
         for (int i= 0; i < s.length(); i++ ) {
             if (s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') {
-                res2= res2 + Character.toString(s.charAt(i));
+                result_upper= result_upper + Character.toString(s.charAt(i));
             } else {
-                res1= res1 + Character.toString(s.charAt(i));
+                result_lower= result_lower + Character.toString(s.charAt(i));
             }
         }
-        return res1 + res2;
+        return result_lower + result_upper;
 
         // throw new UnsupportedOperationException();
     }
@@ -201,7 +206,6 @@ public class A2 {
         if (s.indexOf(s1) != s.lastIndexOf(s1) || s.indexOf(s1) == -1) { return false; }
         return true;
         // throw new UnsupportedOperationException();
-        // s = 'abbbabc' , s1 = 'abc' : s.indexOf(s1) -> 4 , s.lastIndexOf(s1) -> 4
     }
 
     /** Return true iff s and t are anagrams.<br>
@@ -247,7 +251,7 @@ public class A2 {
      * For nCat("bbbbbb", "bb") return 3 <br>
      * For nCat("bbbbbb", "bbb") return 2 <br>
      * For nCat("bbbbbb", "bbbb") return -1 <br>
-     * For nCat("bbbbbb", "bbbbb") eturn -1 <br>
+     * For nCat("bbbbbb", "bbbbb") return -1 <br>
      * For nCat("bbbbbb", "bbbbbb") return 1 <br>
      * For nCat("bbbbbb", "bbbbbbb") return -1 <br>
      * For nCat("xyzxyz", "xyz") return 2 <br>
@@ -259,17 +263,30 @@ public class A2 {
         // Hint: Follow this Principle:
         // Make the structure of a loop reflect the structure of the data it processes.
         // Use function equals, not ==, to test equality of strings.
-        if (s.length() < x.length()) { return -1; }
-        if (s.length() == 0 && x.length() == 0 || x.indexOf(s) == -1) { return 0; }
-        if (s.indexOf(x) == -1) { return -1; }
-        // int lengthX= x.length();
-        int i= 0;
-        String test= "";
-        while (i <= s.length() / x.length()) {
-            test= test.concat(x);
-            i++ ;
-            if (test.equals(s)) { return i; }
+        if (s.length() < x.length()) {
+            if (s.length() == 0) { return 0; }
+            return -1;
         }
+
+        if (s.length() < x.length()) { return -1; }
+
+        if (s.length() == 0 && x.length() == 0) {
+            if (x.indexOf(s) == -1) { return -1; }
+            return 0;
+        }
+        if (s.indexOf(x) == -1) { return -1; }
+
+        int i= 0;
+        String test= ""; // Test string to see whether it equals to s at the end
+        if (x.length() != 0) {
+
+            while (i <= s.length() / x.length()) {
+                test= test.concat(x);
+                i++ ;
+                if (test.equals(s)) { return i; }
+            }
+        }
+
         return -1;
 
         // throw new UnsupportedOperationException();
@@ -285,6 +302,11 @@ public class A2 {
      * For s = "hellohellohello" return 5 <br>
      * For s = "hellohelloworld" return 15 <br>
      * For s = "hellohell" return 9 */
+    // ncat(s,x) x*n =s -> return n otherwise return -1'
+    // ncat("xxxxxxxxx", x) -> return not -1 , then shortest("xxxxxxxxx") -> return x.length()
+    // ncat("hellohelloworld", "hello") -> return -1 , then shortest("hellohelloworld") -> return
+    // s1.length()
+    // s1 ="hellohelloworld"
     public static int shortest(String s) {
         // TODO 7.
         // 1. To implement this one, start checking for the shortest
@@ -292,11 +314,26 @@ public class A2 {
         // the answer is found. To make each of those checks,
         // use the previous method nCat.
         //
-        // 2. If the answer is found within a loop body, the method should return
+        // 2. If the answer is found within a loop body, the methods{ should return
         // within the loop body. That is far better than using a break statement
         // and then fiddling after the loop to figure out what to return.
 
         // 3. Note that nCat(s, s) = 1, for any nonempty s.
-        throw new UnsupportedOperationException();
+        // For s = "xyxyxyxy" return 2
+        /** Check the of the string Check if there is a substring **/
+        if (s.length() == 0) { return 0; }
+        char[] s1= s.toCharArray();
+        String test= ""; // Is equal to string x in the method function nCat(s,x) to see if x is a
+                         // substring of s
+        for (int i= 0; i < s.length(); i++ ) {
+            test= test + Character.toString(s1[i]);
+            if (nCat(s, test) != -1) {
+                return test.length();
+            } else {
+                continue;
+            }
+        }
+        return s.length();
+        // throw new UnsupportedOperationException();
     }
 }
