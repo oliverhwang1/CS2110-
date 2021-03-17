@@ -1,7 +1,5 @@
 package linklist;
 
-import java.util.LinkedList;
-
 /*  Name(s):
  * Netid(s):
  * What I thought about this assignment:
@@ -94,27 +92,21 @@ public class CList<E> {
 
         // You can't test this fully until #2, prepend, is written.
         // Extreme case to watch out for: E is String and data items are the empty string.
-        Node current= tail;
-        Node prev= null;
-        LinkedList<Integer> list= new LinkedList<>();
+        if (tail == null) return "[]";
+        StringBuilder sb= new StringBuilder("[" + tail.data);
 
-        if (prev == tail) { return "[, ]"; }
-        while (current != null) {
-            current.next= prev;
-            prev= current;
-            current= current.next;
+        Node n= tail.prev;
 
+        while (n != tail) {
+            sb.append(", ");
+            sb.append(n.data);
+            n= n.prev;
         }
+        sb.append("]");
 
-        // following is tostring:
-        String new_list= " ";
-        for (int i= 0; i < list.size(); i++ ) {
-            new_list= list.get(i) + ",";
+        return sb.toString();
 
-        }
-
-        // throw new UnsupportedOperationException();
-        return "[" + new_list + "]";
+        // throw new UnsupportedOperationException(); return "[" + new_list + "]"; */
     }
 
     /** Insert v at the beginning of the list. <br>
@@ -125,13 +117,28 @@ public class CList<E> {
         // toStringR throughly before starting on the next method.
         // These two must be correct in order to be able to write and test all others.
 
-        // if v =2
-        // [8,7,4,2]
-        // Move 2 to the beginning
-        Node new_node= new Node(null, v, null);
-        new_node.next= head;
-        head= new_node;
-    }
+        if (head == null) {
+
+            head= tail= new Node(null, v, null);
+            head.next= tail;
+            tail.prev= head;
+            tail.next= head;
+            size+= 1;
+
+        } else {
+
+            Node temp= head;
+            head= new Node(null, v, null);
+            head.next= temp;
+            temp.prev= head;
+            tail.next= head;
+            head.prev= tail;
+            size+= 1;
+
+        }
+        // [8,7,4] [3,8,7,4] tail.next = head
+    }       // ^ ^ ^
+            // temp v temp
 
     /** Change the head of this list to head.next and return the new head.<br>
      * Thus, the head becomes the tail.<br>
@@ -142,7 +149,22 @@ public class CList<E> {
     public Node changeHeadToNext() {
         // TODO 3.
 
-        throw new UnsupportedOperationException();
+        if (head == null || head == tail) { return head; }
+        Node temp= head;
+        head= head.next;
+
+        tail.next= temp;
+        temp.prev= tail;
+        tail= temp;
+        tail.next= head;
+        head.prev= tail;
+
+        // throw new UnsupportedOperationException();
+        // [4, 3, 2, 1] [3, 2, 1, 4]
+        // ^ ^ ^ ^
+        // temp tail temp
+
+        return head;
     }
 
     /** Add v to the end of this list. <br>
@@ -152,6 +174,32 @@ public class CList<E> {
     public void append(E v) {
         // TODO 4. After writing writing this method, test it thoroughly before
         // moving on to the next one.
+
+        if (head == null) {
+
+            head= tail= new Node(null, v, null);
+            head.next= tail;
+            tail.prev= head;
+            tail.next= head;
+            size+= 1;
+
+        } else {
+
+            Node temp= tail;
+
+            tail= new Node(null, v, null);
+
+            temp.next= tail;
+            tail.prev= temp;
+
+            tail.next= head;
+            head.prev= tail;
+            size+= 1;
+
+        }
+        // [3,2,4] [3, 2, 4, 8] temp.next = v
+        // ^ ^ ^
+        // temp temp v
 
     }
 
