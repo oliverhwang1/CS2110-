@@ -2,6 +2,8 @@ package linklist;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 class CListTest {
@@ -57,5 +59,24 @@ class CListTest {
         assertEquals("[4, 5, 6, 7, 3]", c4.toString());
         c4.append("10");
         assertEquals("[4, 5, 6, 7, 3, 10]", c4.toString());
+        CList<String> c5= new CList<>();
+        for (int i= 2; i < 42; i+= 2) {
+            String n= String.valueOf(i);
+            c5.append(n);
+        }
+        assertEquals("[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40]",
+            c5.toString());
+        ArrayList<String> number= new ArrayList<>();
+        CList<String> c6= new CList<>();
+        for (int i= 0; i < c5.size(); i++ ) { number.add(c5.getNode(i).data()); }
+        assertEquals("[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4]",
+            number);
+        c4.remove(c4.getNode(1));
+        assertEquals("[4, 6, 7, 3, 10]", c4.toString());
+        c4.remove(c4.getNode(2));
+        assertEquals("[4, 6, 3, 10]", c4.toString());
+        c4.remove(c4.getNode(1));
+        assertEquals("[4, 3, 10]", c4.toString());
+
     }
 }

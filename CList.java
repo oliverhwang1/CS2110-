@@ -174,9 +174,7 @@ public class CList<E> {
     public void append(E v) {
         // TODO 4. After writing writing this method, test it thoroughly before
         // moving on to the next one.
-
         if (head == null) {
-
             head= tail= new Node(null, v, null);
             head.next= tail;
             tail.prev= head;
@@ -191,7 +189,6 @@ public class CList<E> {
 
             temp.next= tail;
             tail.prev= temp;
-
             tail.next= head;
             head.prev= tail;
             size+= 1;
@@ -207,20 +204,70 @@ public class CList<E> {
      * Precondition: 0 <= h < size of the list. <br>
      * Note: If h is 0, return first node; if h = 1, return second node, ... */
     public Node getNode(int h) {
+
         // TODO 5. This method should take time proportional to min(h, size-h).
         // For example, if h < size/2, search from the beginning of the
         // list, otherwise search from the end of the list.
         // If h = size/2, search from either end; it doesn't matter.
+        if (h < size / 2) {
+            int i= 0;
+            Node temp= head;
+            while (i != h) {
+                temp= temp.next;
+                i+= 1;
+            }
+            return temp;
+        }
 
-        throw new UnsupportedOperationException();
+        h= size - h;
+        int j= 0;
+        Node temp= head;
+        while (j != h) {
+            temp= temp.next;
+            j+= 1;
+        }
+
+        return temp;
     }
+
+    // [1,2,3,5,7,8] == size=6 h=2 min (2,4) = 2 => return node.data = 3.
+
+    // throw new UnsupportedOperationException();
+
+    // h = 4 size = 5 min(h, size-h) = min(4, 1) = 1; size /2 = 2 -> if h >= size / 2 {
+    // [4,5,6,7,8] <- linkedlist; in this case ,return node of 5.
 
     /** Remove node n from this list. <br>
      * This operation must take constant time. <br>
      * Precondition: n must be a node of this list; it may not be null. */
     public void remove(Node n) {
         // TODO 6. Make sure this method takes constant time.
+        /** Node temp= n;
+         *
+         * Node temp2= n.next; **/
+        Node temp= head;
+        while (temp != n) {
+            temp= temp.next;
+        }
 
+        Node temp_prev= temp.prev;
+        Node temp_next= temp.next;
+
+        Node temp2= head;
+        while (temp2 != temp_prev) {
+            temp2= temp2.next;
+
+        }
+        // temp = temp_prev (n.prev) temp = n
+        temp2.next= temp_next;
+        temp_next.prev= temp2;
+
+        /** temp.next= tail; tail.prev= temp;
+         *
+         * tail.next= head; head.prev= tail; size+= 1; **/
+
+        // [ 3,4,1,6,7] remove node of 4 => [3,1,6,7]
+        // ^
     }
 
     /** Insert v in a new node before node n. <br>
