@@ -3,6 +3,7 @@ package linklist;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -67,10 +68,15 @@ class CListTest {
         assertEquals("[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40]",
             c5.toString());
         ArrayList<String> number= new ArrayList<>();
-        CList<String> c6= new CList<>();
+        // CList<String> c6= new CList<>();
         for (int i= 0; i < c5.size(); i++ ) { number.add(c5.getNode(i).data()); }
-        assertEquals("[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4]",
-            number);
+
+        ArrayList<String> test= new ArrayList<>(Arrays.asList("2", "4", "6", "8", "10", "12",
+            "14", "16", "18", "20", "22", "20", "18", "16", "14", "12", "10", "8", "6", "4"));
+        // assertEquals("[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4]",
+        // number);
+        assertEquals(true, number.equals(test));
+
         c4.remove(c4.getNode(1));
         assertEquals("[4, 6, 7, 3, 10]", c4.toString());
         c4.remove(c4.getNode(2));
@@ -78,5 +84,20 @@ class CListTest {
         c4.remove(c4.getNode(1));
         assertEquals("[4, 3, 10]", c4.toString());
 
+        c4.insertBefore("1", c4.getNode(2)); // [4, 3, 1, 10]
+        assertEquals("[4, 3, 1, 10]", c4.toString());
+        c4.insertBefore("20", c4.getNode(0)); // [20, 4, 3, 1, 10]
+        assertEquals("[20, 4, 3, 1, 10]", c4.toString());
+        // c4.insertBefore("30", c4.getNode(4)); // [20, 4, 3, 1, 30, 10]
+        // assertEquals("[20, 4, 3, 1, 30, 10]", c4.toString());
+        CList<String> c6= new CList<>();
+        c6.append("5");
+        assertEquals("[5]", c6.toString());
+        c6.append("10");
+        assertEquals("[5, 10]", c6.toString());
+        c6.append("15");
+        assertEquals("[5, 10, 15]", c6.toString());
+        c6.insertBefore("18", c6.getNode(0));
+        assertEquals("[18, 5, 10, 15]", c6.toString());
     }
 }

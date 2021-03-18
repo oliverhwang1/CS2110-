@@ -151,18 +151,13 @@ public class CList<E> {
 
         if (head == null || head == tail) { return head; }
         Node temp= head;
-        head= head.next;
+        head= temp.next;
 
         tail.next= temp;
         temp.prev= tail;
         tail= temp;
         tail.next= head;
         head.prev= tail;
-
-        // throw new UnsupportedOperationException();
-        // [4, 3, 2, 1] [3, 2, 1, 4]
-        // ^ ^ ^ ^
-        // temp tail temp
 
         return head;
     }
@@ -231,7 +226,7 @@ public class CList<E> {
     }
 
     // [1,2,3,5,7,8] == size=6 h=2 min (2,4) = 2 => return node.data = 3.
-
+    // [5, 10, 15] ==> [5, 10, 18, 15]
     // throw new UnsupportedOperationException();
 
     // h = 4 size = 5 min(h, size-h) = min(4, 1) = 1; size /2 = 2 -> if h >= size / 2 {
@@ -242,32 +237,30 @@ public class CList<E> {
      * Precondition: n must be a node of this list; it may not be null. */
     public void remove(Node n) {
         // TODO 6. Make sure this method takes constant time.
-        /** Node temp= n;
-         *
-         * Node temp2= n.next; **/
+
         Node temp= head;
         while (temp != n) {
             temp= temp.next;
         }
-
-        Node temp_prev= temp.prev;
-        Node temp_next= temp.next;
+        // temp = tail 7
+        Node temp_prev= temp.prev; // 7 tail // 6
+        Node temp_next= temp.next; // 4 second //3
 
         Node temp2= head;
         while (temp2 != temp_prev) {
             temp2= temp2.next;
 
         }
-        // temp = temp_prev (n.prev) temp = n
+        // temp2 = 7 tail // 6
+
         temp2.next= temp_next;
         temp_next.prev= temp2;
 
-        /** temp.next= tail; tail.prev= temp;
-         *
-         * tail.next= head; head.prev= tail; size+= 1; **/
+        if (head == n) { head= temp_next; }
+        if (tail == n) { tail= temp_prev; }
 
-        // [ 3,4,1,6,7] remove node of 4 => [3,1,6,7]
-        // ^
+        // [ 3,4,1,6,7] remove node of 3 => [4,1,6,7]
+        // [ 3,4,1,6,7] remove node of 7 => [3,4,1,6]
     }
 
     /** Insert v in a new node before node n. <br>
@@ -277,7 +270,25 @@ public class CList<E> {
      * and v is 1, the list is changed to [3, 1, 8, 2] */
     public void insertBefore(E v, Node n) {
         // TODO 7. Make sure this method takes constant time.
+        Node temp= new Node(null, v, null);
+        Node temp2= head;
+        if (n == head) {
+            temp.next= n;
+            n.prev= temp;
+            tail.next= temp;
+            temp.prev= tail;
+            head= temp;
+        } else {
+            while (temp2 != n.prev) {
+                temp2= temp2.next;
+            }
+            temp2.next= temp;
+            temp.prev= temp2;
+            temp.next= n;
+            n.prev= temp;
 
+            // [20, 4, 3, 1, 10] -> [20, 4, 3, 1, 30, 10]
+        }
     }
 
     /*********************/
